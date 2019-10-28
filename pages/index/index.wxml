@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="box">
+    <view class="boxrank {{index}} {{locationnow===index? 'luckyshow' : ''}}"
+          style="top: {{item.top}}; left: {{item.left}}"
+          wx:for="{{box}}" wx:key="">
+      <text class="boxcontent">{{item.name}}</text>
+    </view>
+  <view class="lucky" catchtap="onclick">
+    <text class="clicklucky">抽卡</text>
+  </view>
+</view>

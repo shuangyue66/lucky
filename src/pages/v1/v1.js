@@ -93,13 +93,11 @@ Page({
     ]
   },
   onclick: function() {
-    console.log(1)
     var resultnumber = Math.floor(Math.random() * 16)
     if (!this.data.luckystate) { // 判断状态
       this.data.luckyresult = resultnumber
       this.initiate()
     }
-    console.log(resultnumber, '11111')
   },
   initiate: function() {
     var locationcircle = this.data.locationcircle
@@ -125,12 +123,7 @@ Page({
         })
         setTimeout(this.initiate, 150)
       } else {
-        console.log("你好")
         // 清零
-        // this.data.circulation = 0
-        // this.data.circulationtwo = 0
-        // this.data.locationnow = ''
-        // this.data.luckystate = false
         this.setData({
           circulation: 0,
           circulationtwo: 0,

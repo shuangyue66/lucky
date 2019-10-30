@@ -13,56 +13,9 @@ Page({
     luckyresult: 0, // 抽奖结果
     circulation: 0, // 循环变量
     circulationtwo: 0, // 第二次循环变量
-    box: [
-      {
-        name: '麦当劳'
-      },
-      {
-        name: '肯德基'
-      },
-      {
-        name: '必胜客'
-      },
-      {
-        name: '炒菜'
-      },
-      {
-        name: '炸鸡'
-      },
-      {
-        name: '麦当劳'
-      },
-      {
-        name: '肯德基'
-      },
-      {
-        name: '必胜客'
-      },
-      {
-        name: '炒菜'
-      },
-      {
-        name: '炸鸡'
-      },
-      {
-        name: '麦当劳'
-      },
-      {
-        name: '肯德基'
-      },
-      {
-        name: '必胜客'
-      },
-      {
-        name: '炒菜'
-      },
-      {
-        name: '炸鸡'
-      },
-      {
-        name: '再抽一次'
-      }
-    ]
+    box: [],
+    hidden: true // 弹窗显示
+    // sss: true
   },
   onclick: function() {
     console.log(1)
@@ -71,7 +24,6 @@ Page({
       this.data.luckyresult = resultnumber
       this.initiate()
     }
-    console.log(resultnumber, '11111')
   },
   initiate: function() {
     var locationcircle = this.data.locationcircle
@@ -115,18 +67,59 @@ Page({
       }
     }
   },
+  // 点击按钮换box数组
+  clickchange: function() {
+    console.log(0)
+    this.setData({
+      hidden: false
+    })
+  },
+  // 弹窗取消按钮
+  cancel: function() {
+    console.log('取消')
+    this.setData({
+      hidden: true
+    })
+  },
+  // 弹窗提交按钮
+  confirm: function() {
+    console.log('提交')
+    this.setData({
+      hidden: true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log('你好')
+    // 遍历抽卡数组
+    var luckylist = ['麦当劳', '肯德基', '必胜客', '炒菜', '炸鸡']
+    var listlength = 16
+    // 数组能循环几次
+    var listnum = Math.floor(listlength / luckylist.length)
+    var newlist = []
+    for (var a = 0; a < listnum; a++) {
+      luckylist.map(i => {
+        newlist.push({name: i})
+        console.log(newlist, 'x新数组')
+      })
+    }
+    if (newlist.length !== 16) {
+      newlist.push({name: '再抽一次'})
+    }
+    if (newlist.length === 16) {
+      this.setData({
+        box: newlist
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log('你好2')
   },
 
   /**

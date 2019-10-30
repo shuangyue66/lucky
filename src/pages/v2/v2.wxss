@@ -131,3 +131,7 @@
     height: 160rpx;
     background: #FF6A6A;
 }
+
+.luckychange {
+    margin: 60rpx 0 0;
+}

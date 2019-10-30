@@ -1,0 +1,25 @@
+<!--pages/v2/v2.wxml-->
+<view class="box">
+    <view class="boxrank boxrank-{{index}} {{locationnow===index? 'luckyshow' : ''}}"
+            wx:for="{{box}}" wx:key="">
+        <text class="boxcontent">{{item.name}}</text>
+    </view>
+    <view class="lucky" catchtap="onclick">
+    <text class="clicklucky">抽卡</text>
+    </view>
+</view>
+<view class="luckychange">
+    <button bindtap="clickchange"
+            style="background: #f8af72; color: #fff">点击更换抽卡内容</button>
+</view>
+<modal hidden="{{hidden}}"
+        title="这里是title"
+        confirm-text="提交"
+        cancel-text="取消"
+        bindcancel="cancel"
+        bindconfirm="confirm">
+    
+    <input type='text' placeholder="时间：" auto-focus/>
+</modal>
+
+

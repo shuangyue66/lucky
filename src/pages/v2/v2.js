@@ -14,8 +14,8 @@ Page({
     circulation: 0, // 循环变量
     circulationtwo: 0, // 第二次循环变量
     box: [],
-    hidden: true // 弹窗显示
-    // sss: true
+    hidden: false, // 弹窗显示
+    inputValue: [] // 表单input值
   },
   onclick: function() {
     console.log(1)
@@ -69,52 +69,91 @@ Page({
   },
   // 点击按钮换box数组
   clickchange: function() {
-    console.log(0)
+    let inputValue = wx.getStorageSync('box')
+    if (inputValue.list) {
+      this.setData({
+        inputValue: inputValue.box,
+        hidden: true
+      })
+    } else {
+      this.setData({
+        hidden: true
+      })
+    }
+  },
+  // 隐藏表单
+  hideform: function() {
     this.setData({
       hidden: false
-    })
-  },
-  // 弹窗取消按钮
-  cancel: function() {
-    console.log('取消')
-    this.setData({
-      hidden: true
-    })
-  },
-  // 弹窗提交按钮
-  confirm: function() {
-    console.log('提交')
-    this.setData({
-      hidden: true
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('你好')
-    // 遍历抽卡数组
-    var luckylist = ['麦当劳', '肯德基', '必胜客', '炒菜', '炸鸡']
-    var listlength = 16
-    // 数组能循环几次
-    var listnum = Math.floor(listlength / luckylist.length)
-    var newlist = []
-    for (var a = 0; a < listnum; a++) {
-      luckylist.map(i => {
-        newlist.push({name: i})
-        console.log(newlist, 'x新数组')
-      })
-    }
-    if (newlist.length !== 16) {
-      newlist.push({name: '再抽一次'})
-    }
-    if (newlist.length === 16) {
+    let boxlist = wx.getStorageSync('box')
+    if (boxlist.box) {
       this.setData({
-        box: newlist
+        box: boxlist.box
       })
+    } else {
+      // 遍历抽卡数组
+      var luckylist = ['麦当劳', '肯德基', '必胜客', '炒菜', '炸鸡']
+      var listlength = 16
+      // 数组能循环几次
+      var listnum = Math.floor(listlength / luckylist.length)
+      var newlist = []
+      for (var a = 0; a < listnum; a++) {
+        luckylist.map(i => {
+          newlist.push({name: i})
+        })
+      }
+      if (newlist.length !== 16) {
+        newlist.push({name: '再抽一次'})
+      }
+      if (newlist.length === 16) {
+        this.setData({
+          box: newlist
+        })
+      }
     }
   },
-
+  // 表单提交按钮
+  formSubmit: function(e) {
+    console.log(e.detail.value, '点击')
+    var inputDatail = e.detail.value
+    let valuelist = [] 
+    for (let i in inputDatail) {
+      console.log(inputDatail[i], '444')
+      if (!inputDatail[i]) {
+        inputDatail[i] = "再抽一次"
+      } 
+      valuelist.push({name: inputDatail[i]})
+    }
+    // console.log(valuelist, '00')
+    if (valuelist) {
+      this.setData({
+        box: valuelist,
+        hidden: false
+      })
+      wx.setStorage({
+        key: 'box',
+        data: {
+          box: valuelist,
+          list: inputDatail
+        }
+      })
+      // try {
+      //   wx.setStorageSync()
+      // }
+    }
+  },
+  // 表单取消按钮
+  formReset: function(e) {
+    this.setData({
+      hidden: false
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

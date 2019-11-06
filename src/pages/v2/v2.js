@@ -18,7 +18,6 @@ Page({
     inputValue: [] // 表单input值
   },
   onclick: function() {
-    console.log(1)
     var resultnumber = Math.floor(Math.random() * 16)
     if (!this.data.luckystate) { // 判断状态
       this.data.luckyresult = resultnumber
@@ -48,7 +47,6 @@ Page({
         })
         setTimeout(this.initiate, 150)
       } else {
-        console.log("你好")
         // 清零
         this.setData({
           circulation: 0,
@@ -60,7 +58,7 @@ Page({
         var index = this.data.luckyresult
         wx.showModal({
           title: '',
-          content: '今晚吃' + this.data.box[index].name,
+          content: this.data.box[index].name,
           showCancel: false
         })
         clearTimeout(time)
@@ -69,17 +67,9 @@ Page({
   },
   // 点击按钮换box数组
   clickchange: function() {
-    let inputValue = wx.getStorageSync('box')
-    if (inputValue.list) {
-      this.setData({
-        inputValue: inputValue.box,
-        hidden: true
-      })
-    } else {
-      this.setData({
-        hidden: true
-      })
-    }
+    this.setData({
+      hidden: true
+    })
   },
   // 隐藏表单
   hideform: function() {
@@ -92,9 +82,10 @@ Page({
    */
   onLoad: function (options) {
     let boxlist = wx.getStorageSync('box')
-    if (boxlist.box) {
+    if (boxlist.box) { // 判断本地有没有存储选择卡数组
       this.setData({
-        box: boxlist.box
+        box: boxlist.box,
+        inputValue: boxlist.box
       })
     } else {
       // 遍历抽卡数组
@@ -113,40 +104,55 @@ Page({
       }
       if (newlist.length === 16) {
         this.setData({
-          box: newlist
+          box: newlist,
+          inputValue: newlist
         })
       }
     }
   },
   // 表单提交按钮
   formSubmit: function(e) {
-    console.log(e.detail.value, '点击')
     var inputDatail = e.detail.value
+    let emptyjudge = true
+    let judgeNum = 0 
     let valuelist = [] 
     for (let i in inputDatail) {
-      console.log(inputDatail[i], '444')
       if (!inputDatail[i]) {
+        emptyjudge = false // 值空 为 false
+        judgeNum++ // 空值有几个
         inputDatail[i] = "再抽一次"
       } 
       valuelist.push({name: inputDatail[i]})
     }
-    // console.log(valuelist, '00')
-    if (valuelist) {
-      this.setData({
-        box: valuelist,
-        hidden: false
-      })
-      wx.setStorage({
-        key: 'box',
-        data: {
-          box: valuelist,
-          list: inputDatail
+    if (emptyjudge) { // 判断是否被空)
+      this.countWay(valuelist)
+    } else {
+      let that = this
+      wx.showModal({
+        title: '提示',
+        content: '你有 ' + judgeNum + ' 个选择卡没填\r\n 空的选择卡将以 "再来一次" 来补充\r\n 确定提交吗？',
+        success (res) {
+          if (res.confirm) {
+            that.countWay(valuelist)
+          } else if (res.cancel) {
+            judgeNum = 0
+          }
         }
       })
-      // try {
-      //   wx.setStorageSync()
-      // }
     }
+  },
+  countWay: function(e) {
+    this.setData({
+      box: e,
+      inputValue: e,
+      hidden: false
+    })
+    wx.setStorage({
+      key: 'box',
+      data: {
+        box: e
+      }
+    })
   },
   // 表单取消按钮
   formReset: function(e) {

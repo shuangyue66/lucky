@@ -153,6 +153,11 @@ Page({
         box: e
       }
     })
+    wx.showToast({
+      title: '成功',
+      icon: 'success',
+      duration: 1000
+    })
   },
   // 表单取消按钮
   formReset: function(e) {

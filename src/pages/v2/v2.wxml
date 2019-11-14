@@ -17,149 +17,151 @@
     <view class="formbox" wx:if="{{hidden}}">
         <view class="formcontent">
             <form bindsubmit="formSubmit" bindreset="formReset">
-                <view class="formview">
-                    <view class="formview-v">选择卡1</view>
-                    <input class="formview-i"
-                            name="0"
-                            maxlength="6"
-                            value="{{inputValue[0].name}}"
-                            placeholder="请输入选择卡内容1">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡2</view>
-                    <input class="formview-i"
-                            name="1"
-                            maxlength="6"
-                            value="{{inputValue[1].name}}"
-                            placeholder="请输入选择卡内容2">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡3</view>
-                    <input class="formview-i"
-                            name="2"
-                            maxlength="6"
-                            value="{{inputValue[2].name}}"
-                            placeholder="请输入选择卡内容3">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡4</view>
-                    <input class="formview-i"
-                            name="3"
-                            maxlength="6"
-                            value="{{inputValue[3].name}}"
-                            placeholder="请输入选择卡内容4">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡5</view>
-                    <input class="formview-i"
-                            name="4"
-                            maxlength="6"
-                            value="{{inputValue[4].name}}"
-                            placeholder="请输入选择卡内容5">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡6</view>
-                    <input class="formview-i"
-                            name="5"
-                            maxlength="6"
-                            value="{{inputValue[5].name}}"
-                            placeholder="请输入选择卡内容6">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡7</view>
-                    <input class="formview-i"
-                            name="6"
-                            maxlength="6"
-                            value="{{inputValue[6].name}}"
-                            placeholder="请输入选择卡内容7">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡8</view>
-                    <input class="formview-i"
-                            name="7"
-                            maxlength="6"
-                            value="{{inputValue[7].name}}"
-                            placeholder="请输入选择卡内容8">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡9</view>
-                    <input class="formview-i"
-                            name="8"
-                            maxlength="6"
-                            value="{{inputValue[8].name}}"
-                            placeholder="请输入选择卡内容9">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡10</view>
-                    <input class="formview-i"
-                            name="9"
-                            maxlength="6"
-                            value="{{inputValue[9].name}}"
-                            placeholder="请输入选择卡内容10">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡11</view>
-                    <input class="formview-i"
-                            name="10"
-                            maxlength="6"
-                            value="{{inputValue[10].name}}"
-                            placeholder="请输入选择卡内容11">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡12</view>
-                    <input class="formview-i"
-                            name="11"
-                            maxlength="6"
-                            value="{{inputValue[11].name}}"
-                            placeholder="请输入选择卡内容12">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡13</view>
-                    <input class="formview-i"
-                            name="12"
-                            maxlength="6" 
-                            value="{{inputValue[12].name}}"
-                            placeholder="请输入选择卡内容13">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡14</view>
-                    <input  class="formview-i"
-                            name="13"
-                            maxlength="6"
-                            value="{{inputValue[13].name}}"
-                            placeholder="请输入选择卡内容14">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡15</view>
-                    <input class="formview-i"
-                            name="14"
-                            maxlength="6"
-                            value="{{inputValue[14].name}}"
-                            placeholder="请输入选择卡内容15">
-                    </input>
-                </view>
-                <view class="formview">
-                    <view class="formview-v">选择卡16</view>
-                    <input  class="formview-i"
-                            name="15"
-                            maxlength="6"
-                            value="{{inputValue[15].name}}"
-                            placeholder="请输入选择卡内容16">
-                    </input>
+                <view class="formArea">
+                    <view class="formview">
+                        <view class="formview-v">选择卡1</view>
+                        <input class="formview-i"
+                                name="0"
+                                maxlength="6"
+                                value="{{inputValue[0].name}}"
+                                placeholder="请输入选择卡内容1">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡2</view>
+                        <input class="formview-i"
+                                name="1"
+                                maxlength="6"
+                                value="{{inputValue[1].name}}"
+                                placeholder="请输入选择卡内容2">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡3</view>
+                        <input class="formview-i"
+                                name="2"
+                                maxlength="6"
+                                value="{{inputValue[2].name}}"
+                                placeholder="请输入选择卡内容3">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡4</view>
+                        <input class="formview-i"
+                                name="3"
+                                maxlength="6"
+                                value="{{inputValue[3].name}}"
+                                placeholder="请输入选择卡内容4">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡5</view>
+                        <input class="formview-i"
+                                name="4"
+                                maxlength="6"
+                                value="{{inputValue[4].name}}"
+                                placeholder="请输入选择卡内容5">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡6</view>
+                        <input class="formview-i"
+                                name="5"
+                                maxlength="6"
+                                value="{{inputValue[5].name}}"
+                                placeholder="请输入选择卡内容6">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡7</view>
+                        <input class="formview-i"
+                                name="6"
+                                maxlength="6"
+                                value="{{inputValue[6].name}}"
+                                placeholder="请输入选择卡内容7">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡8</view>
+                        <input class="formview-i"
+                                name="7"
+                                maxlength="6"
+                                value="{{inputValue[7].name}}"
+                                placeholder="请输入选择卡内容8">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡9</view>
+                        <input class="formview-i"
+                                name="8"
+                                maxlength="6"
+                                value="{{inputValue[8].name}}"
+                                placeholder="请输入选择卡内容9">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡10</view>
+                        <input class="formview-i"
+                                name="9"
+                                maxlength="6"
+                                value="{{inputValue[9].name}}"
+                                placeholder="请输入选择卡内容10">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡11</view>
+                        <input class="formview-i"
+                                name="10"
+                                maxlength="6"
+                                value="{{inputValue[10].name}}"
+                                placeholder="请输入选择卡内容11">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡12</view>
+                        <input class="formview-i"
+                                name="11"
+                                maxlength="6"
+                                value="{{inputValue[11].name}}"
+                                placeholder="请输入选择卡内容12">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡13</view>
+                        <input class="formview-i"
+                                name="12"
+                                maxlength="6" 
+                                value="{{inputValue[12].name}}"
+                                placeholder="请输入选择卡内容13">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡14</view>
+                        <input  class="formview-i"
+                                name="13"
+                                maxlength="6"
+                                value="{{inputValue[13].name}}"
+                                placeholder="请输入选择卡内容14">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡15</view>
+                        <input class="formview-i"
+                                name="14"
+                                maxlength="6"
+                                value="{{inputValue[14].name}}"
+                                placeholder="请输入选择卡内容15">
+                        </input>
+                    </view>
+                    <view class="formview">
+                        <view class="formview-v">选择卡16</view>
+                        <input  class="formview-i"
+                                name="15"
+                                maxlength="6"
+                                value="{{inputValue[15].name}}"
+                                placeholder="请输入选择卡内容16">
+                        </input>
+                    </view>
                 </view>
                 <view class="btnBox">
                     <button class="btnStype" type="warn" formType="reset">取消</button>
@@ -168,4 +170,7 @@
             </form>
         </view>
     </view>
+    <!-- <view>
+        <button bindtap="nihao">你好</button>
+    </view> -->
 </view>

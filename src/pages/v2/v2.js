@@ -8,7 +8,7 @@ Page({
   data: {
     locationnumber: 16, // 共有多少个
     locationnow: '', // 旋转的位置
-    locationcircle: 3*16, // 旋转的个数 
+    locationcircle: 1*16, // 旋转的个数 
     luckystate: false, // 抽奖状态
     luckyresult: 0, // 抽奖结果
     circulation: 0, // 循环变量
@@ -30,22 +30,22 @@ Page({
     this.setData({
       luckystate: true
     })
-    if (i < locationcircle) { // 点击先转3圈
+    if (i < locationcircle) { // 点击先转1圈
       i++
       this.setData({
         locationnow: i % 16,
         circulation: i
       })
-      setTimeout(this.initiate, 100)
+      setTimeout(this.initiate, 50)
     } else {
       var i = this.data.circulationtwo
-      if (i < this.data.luckyresult) { // 3圈转完后 转中奖的个数
+      if (i < this.data.luckyresult) { // 1圈转完后 转中奖的个数
         i++
         this.setData({
           circulationtwo: i,
           locationnow: i % 16
         })
-        setTimeout(this.initiate, 150)
+        setTimeout(this.initiate, 100)
       } else {
         // 清零
         this.setData({
@@ -109,6 +109,13 @@ Page({
         })
       }
     }
+  },
+  nihao: function(e) {
+    wx.login({
+      success (res) {
+        console.log(res, '登陆')
+      }
+    })
   },
   // 表单提交按钮
   formSubmit: function(e) {

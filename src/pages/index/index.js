@@ -14,5 +14,10 @@ Page({
     wx.navigateTo({
       url: '../v2/v2'
     })
+  },
+  onclickv3: function (e) {
+    wx.navigateTo({
+      url: '../v3/v3'
+    })
   }
 })

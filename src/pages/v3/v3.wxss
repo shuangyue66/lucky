@@ -1,0 +1,99 @@
+/* pages/v3/v3.wxss */
+.box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.rotateContainer {
+    position: relative;
+    width: 500rpx;
+    height: 300rpx;
+    margin: 40rpx auto;
+    background: #FFEFDB;
+    text-align: center;
+}
+
+.luckyContent {
+    position: absolute;
+    width: 300rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    top: 30%;
+    left: 100rpx;
+    border: 1px solid #EEE9E9;
+    overflow: hidden;
+}
+
+/* 表单 */
+.formpackage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: #000;
+    opacity: 0.5;
+    overflow: hidden;
+    color: #fff;
+}
+
+.formbox {
+    width: 600rpx;
+    /* height: 800rpx; */
+    overflow: hidden;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    z-index: 3000;
+    background: #fff;
+    margin: 0 75rpx;
+    border-radius: 36rpx;
+}
+
+.formcontent{
+   margin: 40rpx;
+}
+
+.formArea {
+    max-height: 530rpx;
+    overflow: scroll;
+}
+
+.formview {
+    /* padding: 10rpx; */
+    border-bottom: 1px solid #EEE9E9; 
+}
+
+.formview-v {
+    color: #CD9B9B;
+    font-size: 28rpx;
+}
+
+.formview-c {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.formview-c-i {
+    display: inline-block;
+    width: 85%;
+    font-size: 30rpx;
+    background: #F8F8FF;
+    margin: 10rpx 0;
+}
+
+.btnBox {
+    display: flex;
+    margin: 20rpx;
+}
+
+.btnStype {
+    display: list-item;
+    width: 100%;
+    margin: 0 10rpx;
+    color: #fff;
+    background:orange; 
+}

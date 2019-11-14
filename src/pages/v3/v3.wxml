@@ -1,0 +1,50 @@
+<!--pages/v3/v3.wxml-->
+<view class="box">
+    <view class="rotateContainer">
+        <view class="luckyContent">
+            <view hidden='{{!showDefault}}'
+                    animation="{{animationData1}}">{{time}}</view>
+            <view hidden='{{showDefault}}'>{{lists[0].name}}</view>
+        </view>
+    </view>
+    <view>
+        <button bindtap="onlucky">抽奖</button>
+    </view>
+    <view>
+        <button bindtap="onclick"
+                disabled="{{disabled}}">更换</button>
+    </view>
+    <view class="formpackage" wx:if="{{hidden}}"></view>
+    <view class="formbox" wx:if="{{hidden}}">
+        <view class="formcontent">
+            <form bindsubmit="formSubmit" bindreset="formReset">
+                <view class="formArea">
+                    <view class="formview"
+                            wx:for="{{lists}}"
+                            wx:key="">
+                        <view class="formview-v">选择卡{{index+1}}</view>
+                        <view class="formview-c">
+                            <input class="formview-c-i"
+                                    name="{{index}}"
+                                    maxlength="6"
+                                    value="{{lists[index].name}}"
+                                    placeholder="请输入选择卡内容{{index+1}}">
+                            </input>
+                            <icon style="margin: 0 20rpx" 
+                                type="clear"
+                                size="20"
+                                bindtap='delInput'
+                                data-idx='{{index}}'/>
+                        </view>
+                    </view>
+
+                </view>
+                <view class="btnBox">
+                    <button class="btnStype" bindtap='addInput'>添加</button>
+                    <button class="btnStype" type="warn" formType="reset">取消</button>
+                    <button class="btnStype" type="primary" formType="submit">确定</button>
+                </view>
+            </form>
+        </view>
+    </view>
+</view>

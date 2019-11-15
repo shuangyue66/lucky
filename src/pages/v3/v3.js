@@ -22,6 +22,7 @@ Page({
         name: '炸鸡'
       }
     ],
+    newLists: [],
     disabled: false, // 更换禁止
     showDefault: false,
     animationData1: {}, // 动画
@@ -34,36 +35,44 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let boxlist = wx.getStorageSync('list')
+    let oldlist = this.data.lists
+    if (boxlist.list) { // 判断本地有没有存储选择卡数组
+      this.setData({
+        newLists: boxlist.list
+      })
+    } else {
+      this.setData({
+        newLists: oldlist
+      })
+    }
   },
   onlucky: function(e) {
-    console.log(2)
+    let showDefault = this.data.showDefault
     this.setData({
-      showDefault: true,
       disabled: true
     })
     var that = this;
-    let aa = that.data.lists.length
-    console.log(aa, '12')
+    let aa = that.data.newLists.length
     // 随机的数值
     let randomNum = Math.floor(Math.random() * aa + 1)
-    console.log(randomNum, '13')
     // 总旋转次数
     let randomNumTotal = aa * 2 + randomNum
-    this.getOpenAnimation(aa, randomNum, randomNumTotal)
+    if (!showDefault) {
+      this.getOpenAnimation(aa, randomNum, randomNumTotal)
+    }
 
   },
   // 动画
-  getOpenAnimation: function(e, a, s) {
-    console.log(e, 'e')
-    console.log(a, 'a')
-    console.log(s, 's')
+  getOpenAnimation: function(e, randomNum, randomNumTotal) {
+    this.setData({
+      showDefault: true
+    })
     var page = this
     let animation = wx.createAnimation({
       duration: 300, // 执行一次动画的时间
       timingFunction: 'ease', // 动画的效果，平滑
     })
-    console.log(11)
     let num = 0
     let count = 1
     let loop = setInterval(function () {
@@ -73,7 +82,7 @@ Page({
         // 如果计数值大于数组index，置为0
         num = 0;
       }
-      if (count > s) {
+      if (count > randomNumTotal) {
         animation.translateY(1).step({
           duration: 300
         });
@@ -83,7 +92,7 @@ Page({
         handleSet(page);
         clearInterval(loop);
       } else {
-        animation.translateY(60).step().translateY(-20).step({
+        animation.translateY(90).step().translateY(-30).step({
           duration: 0
         });
         handleSet(page);
@@ -91,17 +100,16 @@ Page({
 
       function handleSet(page) {
         page.setData({
-          time: page.data.lists[num].name,
+          time: page.data.newLists[num].name,
           animationData1: animation.export()
         })
       }
-    }, 200)
+    }, 400)
     page.setData({
       interval: loop
     })
   },
   onclick: function(e) {
-    console.log(1)
     this.setData({
       showDefault: false,
       hidden: true
@@ -109,24 +117,34 @@ Page({
     var aaa = this.data.interval
     clearInterval(aaa)
   },
+  oldOnlucky: function() {
+    let oldList = this.data.lists
+    this.setData({
+      newLists: oldList
+    })
+    wx.showToast({
+      title: '成功',
+      icon: 'success',
+      duration: 1000
+    })
+  },
   // 增加input
   addInput: function(e) {
-    let listsValue = this.data.lists // lists
+    let listsValue = this.data.newLists // lists
     listsValue.push({name: ""})
     this.setData({
-      lists: listsValue
+      newLists: listsValue
   })
   },
   // 删除input
   delInput: function(e) {
-    console.log(e.currentTarget.dataset.idx, 'idx')
     let nowidx = e.currentTarget.dataset.idx // 当前删除input index值
-    let lists = this.data.lists.length // lists一共有几个
-    let listsValue = this.data.lists // lists
+    let lists = this.data.newLists.length // lists一共有几个
+    let listsValue = this.data.newLists // lists
     if (lists > 2) {
       listsValue.splice(nowidx, 1)
       this.setData({
-        lists: listsValue
+        newLists: listsValue
       })
     } else {
       wx.showModal({
@@ -138,14 +156,43 @@ Page({
   },
   // 表单确定按钮
   formSubmit: function(e) {
-    console.log(e.detail.value, 'value')
+    let inputDatail = e.detail.value
+    let valuelist = this.data.newLists
+    for (let i in inputDatail) {
+      if (!inputDatail[i]) {
+        valuelist.splice(i, 1)
+      } 
+    }
+    this.countWay(valuelist)
+  },
+  countWay: function(e) {
     this.setData({
+      newLists: valuelist,
       hidden: false
+    })
+    wx.setStorage({
+      key: 'list',
+      data: {
+        list: e
+      }
+    })
+    wx.showToast({
+      title: '成功',
+      icon: 'success',
+      duration: 1000
     })
   },
   // 表单取消按钮
   formReset: function(e) {
+    let newValuelist = []
+    let valuelist = this.data.newLists
+    for (let i in valuelist) {
+      if (valuelist[i].name) {
+        newValuelist.push({name: valuelist[i].name})
+      } 
+    }
     this.setData({
+      newLists: newValuelist,
       hidden: false
     })
   },

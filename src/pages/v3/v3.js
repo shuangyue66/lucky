@@ -76,7 +76,9 @@ Page({
       duration: 300, // 执行一次动画的时间
       timingFunction: 'ease', // 动画的效果，平滑
     })
-    animation.translateY(0).step()
+    animation.translateY(0).step({
+      duration: 0
+    })
     this.setData({
       Empty: true,
       animationData1: animation.export()
@@ -98,7 +100,7 @@ Page({
     let cccc = (newListsL * 2 - 1) * 120 + bbbb * 120  //随机数的高度
     let dddd = -aaaa + (aaaa - cccc) // 总移动的数
     animation.translateY(dddd / 750 * systemInfo.windowWidth).step({
-      duration: 300
+      duration: 1500
     })
     handleSet(page)
     function handleSet(page) {

@@ -8,7 +8,7 @@ Page({
   data: {
     locationnumber: 16, // 共有多少个
     locationnow: '', // 旋转的位置
-    locationcircle: 1*16, // 旋转的个数 
+    locationcircle: 2*16, // 旋转的个数 
     luckystate: false, // 抽奖状态
     luckyresult: 0, // 抽奖结果
     circulation: 0, // 循环变量

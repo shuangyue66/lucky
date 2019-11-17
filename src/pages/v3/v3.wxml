@@ -3,13 +3,18 @@
     <view class="rotateContainer">
         <image class='draw-img' src='../image/img1.png'></image>
         <view class="luckyContent">
-            <view hidden='{{!showDefault}}'
-                    animation="{{animationData1}}">{{time}}</view>
-            <view hidden='{{showDefault}}'>{{lists[0].name}}</view>
+            <view animation="{{animationData1}}">
+                <block wx:for="{{rollLists}}" wx:key="">
+                    <view>
+                        {{item.name}}
+                    </view>
+                </block>
+            </view>
         </view>
     </view>
     <view style="width: 70%; margin: 0 auto;">
-        <button bindtap="onlucky" >抽奖</button>
+        <button wx:if="{{Empty}}" bindtap="onlucky">抽奖</button>
+        <button wx:else bindtap="onEmpty">重置</button>
     </view>
     <view class="luckychange">
         <button bindtap="onclick"

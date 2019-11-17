@@ -23,13 +23,15 @@ Page({
       }
     ],
     newLists: [],
+    rollLists: [], // 滚动用的数组
     disabled: false, // 更换禁止
     showDefault: false,
     animationData1: {}, // 动画
-    time: "",
     interval: '',
     num: 1,
-    hidden: false
+    hidden: false,
+    showsurface: false,
+    Empty: true
   },
   /**
    * 生命周期函数--监听页面加载
@@ -38,33 +40,50 @@ Page({
     let boxlist = wx.getStorageSync('list')
     let oldlist = this.data.lists
     if (boxlist.list) { // 判断本地有没有存储选择卡数组
+      let newlist = boxlist.list.concat(boxlist.list, boxlist.list)
       this.setData({
-        newLists: boxlist.list
+        newLists: boxlist.list,
+        rollLists: newlist
       })
     } else {
+      let newlist = oldlist.concat(oldlist, oldlist)
       this.setData({
-        newLists: oldlist
+        newLists: oldlist,
+        rollLists: newlist
       })
     }
   },
+  // 抽奖
   onlucky: function(e) {
     let showDefault = this.data.showDefault
     this.setData({
       disabled: true
     })
     var that = this;
-    let aa = that.data.newLists.length
+    let newListsL = that.data.newLists.length // new长度
+    let rollListsL = that.data.rollLists.length // 总长度
     // 随机的数值
-    let randomNum = Math.floor(Math.random() * aa + 1)
+    let randomNum = Math.floor(Math.random() * newListsL + 1)
     // 总旋转次数
-    let randomNumTotal = aa * 2 + randomNum
     if (!showDefault) {
-      this.getOpenAnimation(aa, randomNum, randomNumTotal)
+      this.getOpenAnimation(newListsL, rollListsL, randomNum)
     }
 
   },
+  // 重置
+  onEmpty: function(e) {
+    let animation = wx.createAnimation({
+      duration: 300, // 执行一次动画的时间
+      timingFunction: 'ease', // 动画的效果，平滑
+    })
+    animation.translateY(0).step()
+    this.setData({
+      Empty: true,
+      animationData1: animation.export()
+    })
+  },
   // 动画
-  getOpenAnimation: function(e, randomNum, randomNumTotal) {
+  getOpenAnimation: function(newListsL, e, randomNum) {
     this.setData({
       showDefault: true
     })
@@ -73,54 +92,38 @@ Page({
       duration: 300, // 执行一次动画的时间
       timingFunction: 'ease', // 动画的效果，平滑
     })
-    let num = 0
-    let count = 1
-    let loop = setInterval(function () {
-      num++
-      count++
-      if (num > e - 1) {
-        // 如果计数值大于数组index，置为0
-        num = 0;
-      }
-      if (count > randomNumTotal) {
-        animation.translateY(1).step({
-          duration: 300
-        });
-        page.setData({
-          disabled: false
-        })
-        handleSet(page);
-        clearInterval(loop);
-      } else {
-        animation.translateY(90).step().translateY(-30).step({
-          duration: 0
-        });
-        handleSet(page);
-      }
-
-      function handleSet(page) {
-        page.setData({
-          time: page.data.newLists[num].name,
-          animationData1: animation.export()
-        })
-      }
-    }, 400)
-    page.setData({
-      interval: loop
+    let systemInfo = wx.getSystemInfoSync();
+    let aaaa = (e - 1) * 120 // 总长度
+    let bbbb = randomNum // 随机的数
+    let cccc = (newListsL * 2 - 1) * 120 + bbbb * 120  //随机数的高度
+    let dddd = -aaaa + (aaaa - cccc) // 总移动的数
+    animation.translateY(dddd / 750 * systemInfo.windowWidth).step({
+      duration: 300
     })
+    handleSet(page)
+    function handleSet(page) {
+      page.setData({
+        Empty: false,
+        disabled: false,
+        showDefault: false,
+        animationData1: animation.export()
+      })
+    }
   },
   onclick: function(e) {
     this.setData({
       showDefault: false,
       hidden: true
     })
-    var aaa = this.data.interval
-    clearInterval(aaa)
+    // var aaa = this.data.interval
+    // clearInterval(aaa)
   },
   oldOnlucky: function() {
     let oldList = this.data.lists
+    let rollList = oldList.concat(oldList, oldList)
     this.setData({
-      newLists: oldList
+      newLists: oldList,
+      rollLists: rollList
     })
     wx.showToast({
       title: '成功',
@@ -143,8 +146,10 @@ Page({
     let listsValue = this.data.newLists // lists
     if (lists > 2) {
       listsValue.splice(nowidx, 1)
+      let rollList = listsValue.concat(listsValue, listsValue)
       this.setData({
-        newLists: listsValue
+        newLists: listsValue,
+        rollLists: rollList
       })
     } else {
       wx.showModal({
@@ -166,8 +171,10 @@ Page({
     this.countWay(valuelist)
   },
   countWay: function(e) {
+    let rollList = e.concat(e, e)
     this.setData({
-      newLists: valuelist,
+      newLists: e,
+      rollLists: rollList,
       hidden: false
     })
     wx.setStorage({
@@ -200,7 +207,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+  
   },
 
   /**

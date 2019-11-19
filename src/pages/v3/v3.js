@@ -22,7 +22,9 @@ Page({
         name: '炸鸡'
       }
     ],
-    newLists: [],
+    newLists: [], // 真实储存用的数组
+    storageLists: [], // 表单显示储存用的数组
+    fromLists: [], // 表单显示用的数组
     rollLists: [], // 滚动用的数组
     disabled: false, // 更换禁止
     showDefault: false,
@@ -42,12 +44,14 @@ Page({
     if (boxlist.list) { // 判断本地有没有存储选择卡数组
       let newlist = boxlist.list.concat(boxlist.list, boxlist.list)
       this.setData({
+        fromLists: boxlist.list,
         newLists: boxlist.list,
         rollLists: newlist
       })
     } else {
       let newlist = oldlist.concat(oldlist, oldlist)
       this.setData({
+        fromLists: oldlist,
         newLists: oldlist,
         rollLists: newlist
       })
@@ -94,12 +98,9 @@ Page({
       duration: 300, // 执行一次动画的时间
       timingFunction: 'ease', // 动画的效果，平滑
     })
-    let systemInfo = wx.getSystemInfoSync();
-    let aaaa = (e - 1) * 120 // 总长度
-    let bbbb = randomNum // 随机的数
-    let cccc = (newListsL * 2 - 1) * 120 + bbbb * 120  //随机数的高度
-    let dddd = -aaaa + (aaaa - cccc) // 总移动的数
-    animation.translateY(dddd / 750 * systemInfo.windowWidth).step({
+    // let systemInfo = wx.getSystemInfoSync();
+    let sumHeight = -((newListsL * 2 - 1) * 60 + randomNum * 60)  //总随机数的高度
+    animation.translateY(sumHeight).step({
       duration: 1500
     })
     handleSet(page)
@@ -117,15 +118,25 @@ Page({
       showDefault: false,
       hidden: true
     })
-    // var aaa = this.data.interval
-    // clearInterval(aaa)
   },
   oldOnlucky: function() {
     let oldList = this.data.lists
     let rollList = oldList.concat(oldList, oldList)
+    let Empty = this.data.Empty
+    if (Empty) {
+    } else {
+      this.onEmpty()
+    }
     this.setData({
+      fromLists: oldList,
       newLists: oldList,
       rollLists: rollList
+    })
+    wx.setStorage({
+      key: 'list',
+      data: {
+        list: oldList
+      }
     })
     wx.showToast({
       title: '成功',
@@ -133,25 +144,32 @@ Page({
       duration: 1000
     })
   },
+  bindKeyInput: function(e) {
+    let nowidx = e.currentTarget.dataset.idx //表单input的键值
+    let fromLists = this.data.fromLists // 表单显示用的数组
+    let keyValue =  e.detail.value
+    fromLists[nowidx].name = keyValue
+    this.setData({
+      storageLists: fromLists
+    })
+  },
   // 增加input
   addInput: function(e) {
-    let listsValue = this.data.newLists // lists
+    let listsValue = this.data.storageLists // 表单显示存储用的数组
     listsValue.push({name: ""})
     this.setData({
-      newLists: listsValue
-  })
+      fromLists: listsValue
+    })
   },
   // 删除input
   delInput: function(e) {
     let nowidx = e.currentTarget.dataset.idx // 当前删除input index值
-    let lists = this.data.newLists.length // lists一共有几个
-    let listsValue = this.data.newLists // lists
+    let lists = this.data.fromLists.length // lists一共有几个
+    let listsValue = this.data.fromLists // lists
     if (lists > 2) {
       listsValue.splice(nowidx, 1)
-      let rollList = listsValue.concat(listsValue, listsValue)
       this.setData({
-        newLists: listsValue,
-        rollLists: rollList
+        fromLists: listsValue
       })
     } else {
       wx.showModal({
@@ -164,11 +182,11 @@ Page({
   // 表单确定按钮
   formSubmit: function(e) {
     let inputDatail = e.detail.value
-    let valuelist = this.data.newLists
+    let valuelist = []
     for (let i in inputDatail) {
-      if (!inputDatail[i]) {
-        valuelist.splice(i, 1)
-      } 
+      if (inputDatail[i]) {
+        valuelist.push({name: inputDatail[i]})
+      }
     }
     this.countWay(valuelist)
   },
@@ -176,9 +194,15 @@ Page({
     let rollList = e.concat(e, e)
     this.setData({
       newLists: e,
+      fromLists: e,
       rollLists: rollList,
       hidden: false
     })
+    let Empty = this.data.Empty
+    if (Empty) {
+    } else {
+      this.onEmpty()
+    }
     wx.setStorage({
       key: 'list',
       data: {
@@ -201,6 +225,7 @@ Page({
       } 
     }
     this.setData({
+      fromLists: newValuelist,
       newLists: newValuelist,
       hidden: false
     })

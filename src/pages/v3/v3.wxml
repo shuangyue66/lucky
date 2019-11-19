@@ -13,8 +13,14 @@
         </view>
     </view>
     <view style="width: 70%; margin: 0 auto;">
-        <button wx:if="{{Empty}}" bindtap="onlucky">抽奖</button>
-        <button wx:else bindtap="onEmpty">重置</button>
+        <button wx:if="{{Empty}}"
+                bindtap="onlucky"
+                type="default"
+                plain="false">抽奖</button>
+        <button wx:else
+                bindtap="onEmpty"
+                type="warn"
+                plain="false">重置</button>
     </view>
     <view class="luckychange">
         <button bindtap="onclick"
@@ -22,23 +28,26 @@
                 disabled="{{disabled}}">更换选择卡</button>
     </view>
     <view style="width: 70%; margin: 0 auto;">
-            <button bindtap="oldOnlucky" type="primary">换回默认选择卡</button>
-        </view>
+            <button bindtap="oldOnlucky"
+                    type="primary">选择默认选择卡</button>
+    </view>
     <view class="formpackage" wx:if="{{hidden}}"></view>
     <view class="formbox" wx:if="{{hidden}}">
         <view class="formcontent">
             <form bindsubmit="formSubmit" bindreset="formReset">
                 <view class="formArea">
                     <view class="formview"
-                            wx:for="{{newLists}}"
+                            wx:for="{{fromLists}}"
                             wx:key="">
                         <view class="formview-v">选择卡{{index+1}}</view>
                         <view class="formview-c">
                             <input class="formview-c-i"
                                     name="{{index}}"
                                     maxlength="6"
-                                    value="{{newLists[index].name}}"
-                                    placeholder="请输入选择卡内容{{index+1}}">
+                                    value="{{fromLists[index].name}}"
+                                    placeholder="请输入选择卡内容{{index+1}}"
+                                    bindinput="bindKeyInput"
+                                    data-idx='{{index}}'>
                             </input>
                             <icon style="margin: 0 20rpx" 
                                 type="clear"

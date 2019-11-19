@@ -44,16 +44,18 @@ Page({
     if (boxlist.list) { // 判断本地有没有存储选择卡数组
       let newlist = boxlist.list.concat(boxlist.list, boxlist.list)
       this.setData({
-        fromLists: boxlist.list,
-        newLists: boxlist.list,
-        rollLists: newlist
+        storageLists: [...boxlist.list],
+        fromLists: [...boxlist.list],
+        newLists: [...boxlist.list],
+        rollLists: [...newlist]
       })
     } else {
       let newlist = oldlist.concat(oldlist, oldlist)
       this.setData({
-        fromLists: oldlist,
-        newLists: oldlist,
-        rollLists: newlist
+        storageLists: [...oldlist],
+        fromLists: [...oldlist],
+        newLists: [...oldlist],
+        rollLists: [...newlist]
       })
     }
   },
@@ -128,9 +130,10 @@ Page({
       this.onEmpty()
     }
     this.setData({
-      fromLists: oldList,
-      newLists: oldList,
-      rollLists: rollList
+      storageLists: [...oldList],
+      fromLists: [...oldList],
+      newLists: [...oldList],
+      rollLists: [...rollList]
     })
     wx.setStorage({
       key: 'list',
@@ -158,7 +161,7 @@ Page({
     let listsValue = this.data.storageLists // 表单显示存储用的数组
     listsValue.push({name: ""})
     this.setData({
-      fromLists: listsValue
+      fromLists: [...listsValue]
     })
   },
   // 删除input
@@ -169,7 +172,7 @@ Page({
     if (lists > 2) {
       listsValue.splice(nowidx, 1)
       this.setData({
-        fromLists: listsValue
+        fromLists: [...listsValue]
       })
     } else {
       wx.showModal({
@@ -193,9 +196,10 @@ Page({
   countWay: function(e) {
     let rollList = e.concat(e, e)
     this.setData({
-      newLists: e,
-      fromLists: e,
-      rollLists: rollList,
+      storageLists: [...e],
+      newLists: [...e],
+      fromLists: [...e],
+      rollLists: [...rollList],
       hidden: false
     })
     let Empty = this.data.Empty
@@ -206,7 +210,7 @@ Page({
     wx.setStorage({
       key: 'list',
       data: {
-        list: e
+        list: [...e]
       }
     })
     wx.showToast({
@@ -225,8 +229,9 @@ Page({
       } 
     }
     this.setData({
-      fromLists: newValuelist,
-      newLists: newValuelist,
+      storageLists: [...newValuelist],
+      fromLists: [...newValuelist],
+      newLists: [...newValuelist],
       hidden: false
     })
   },

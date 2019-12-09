@@ -1,4 +1,5 @@
 // pages/v3/v3.js
+const getCookie = require('../../utils/getCookie.js')
 Page({
 
   /**
@@ -39,6 +40,62 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // console.log(getCookie.Data, 'sasd')
+    wx.login({
+      success (res) {
+        if (res.code) {
+          console.log(res, 'res')
+          wx.request({
+            url: `${getCookie.HTTP_HOST_API}/api/miniProgram/login/lucky/${res.code}`,
+            method: 'GET',
+            success (ress) {
+              console.log(ress, 'sssss')
+              console.log(ress.header['set-cookie'], '123')
+              if (ress.data.code === '0') {
+                wx.setStorageSync('cookies', ress.header['set-cookie'])
+                  var cookies = ress.header['set-cookie']
+                  let __cookies = [];
+                  (cookies.match(/([\w\-.]*)=([^\s=]+);/g) || []).forEach((str) => {
+                    console.log(str, 'str')
+                    if (str !== 'path=/;' && str.indexOf('csrfToken=') !== 0) {
+                      __cookies.push(str);
+                    }
+                  });
+                  console.log(__cookies) // cookie的值
+                  console.log(__cookies.join().split('=')[1], 'asd')
+                  let daa = __cookies.join().split('=')[1]
+                  let aaaadddd = daa.substring(0,daa.length - 1);
+                  console.log(aaaadddd, 'aaaadddd')
+                  // this.allId = this.allId.substring(0,this.allId.length - 1);
+                  // let aaa = aaaadddd.split('=')[1]
+                  // let aaaaaa = 'dlzf-7N7SNNqUIQn8mcWIjNumf0mUl80WcfnLCRrU3600Uz3279PN6tn2MHuS0yW'
+                  // let aaaaaa = 
+                  wx.request({
+                    url: `${getCookie.HTTP_HOST_API}/api/miniProgram/lucky/getLists`,
+                    method: 'GET',
+                    header: {
+                      'content-type': 'application/json',
+                      'cookie': `${__cookies}`
+                    },
+                    // data: {
+                    //   'EGG_SESS': aaa
+                    // },
+                    success (roll) {
+                      console.log(roll, 'roll')
+                    }
+                  })
+              } else {
+                wx.showToast({
+                  
+                })
+              }
+            }
+          })
+        } else {
+
+        }
+      }
+    })
     let boxlist = wx.getStorageSync('list')
     let oldlist = this.data.lists
     if (boxlist.list) { // 判断本地有没有存储选择卡数组
@@ -172,6 +229,7 @@ Page({
     if (lists > 2) {
       listsValue.splice(nowidx, 1)
       this.setData({
+        storageLists: [...listsValue],
         fromLists: [...listsValue]
       })
     } else {
